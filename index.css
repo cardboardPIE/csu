@@ -78,6 +78,21 @@ img {
     text-align: center;
 }
 
+.charText{
+    font-family: 'Patua One', cursive;
+    text-shadow: 2px 2px black;
+    font-size: 30px;
+    color: white;
+    text-align: left;
+}
+
+.costume{
+    border: 4px black solid;
+    width: 90%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 
 
 /**

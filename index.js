@@ -182,8 +182,36 @@
     //Loads a characters info page when clicked on from the characters page
     function loadCharacterPage(){
         let name = (this.alt);
-        console.log(name);
+        clearPage();
+        addTextToMain(name.toUpperCase(), "charText");
+        addTextToMain("Costumes:", "charText");
+        loadCostumes(parseName(name));
     }
+    
+function loadCostumes(character){
+    let path = "characters/";
+    let mainDiv = document.getElementById("main");
+    let costumeRowDiv = document.createElement("DIV");
+    costumeRowDiv.id = "row";
+   
+    for (let i = 0; i < 8; i++){
+        let costumeImg = document.createElement("IMG");
+        costumeImg.classList.add("costume");
+        costumeImg.src = path + character + "/costumes/costume" + (i+1) + ".png";
+        console.log(costumeImg.src);    
+        costumeRowDiv.appendChild(costumeImg); 
+    }
+    mainDiv.appendChild(costumeRowDiv);
+}
+
+function parseName(name){
+    let newName = name.replace(" ", "_");
+    newName = newName.replace(" ", "_");
+    newName = newName.replace(" ", "_");
+    console.log("\nparseName() got: " + name + "\nreturning: " 
+        + newName + "\n");
+    return newName;
+}
     
 
     
