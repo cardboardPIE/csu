@@ -179,41 +179,166 @@
         
     }
     
+    function addTextTo(text, cssTag = "", givenDiv){
+        let someText = document.createElement("P");
+        if (cssTag.length !== 0 || cssTag === null){
+            someText.classList.add(cssTag);
+        }
+        someText.innerHTML = text;
+ 
+        givenDiv.appendChild(someText); 
+        
+    }
+    
     //Loads a characters info page when clicked on from the characters page
     function loadCharacterPage(){
         let name = (this.alt);
         clearPage();
-        addTextToMain(name.toUpperCase(), "charText");
-        addTextToMain("Costumes:", "charText");
-        loadCostumes(parseName(name));
+        let backDiv = document.createElement("DIV");
+        backDiv.classList.add("charactersDiv");
+        document.body.appendChild(backDiv);
+        
+        //Adds character name
+        addTextTo(name.toUpperCase(), "charText", backDiv);
+        
+        //Adds costumes 
+        addTextTo("Costumes:", "charText", backDiv);
+        loadCostumes(parseName(name), backDiv);
+        
+        //Get info for character and insert into addCharacterMoveInfo()
+        //Use json or .txt file
+        addCharacterMoveInfo(backDiv);
+        
     }
     
-function loadCostumes(character){
-    let path = "characters/";
-    let mainDiv = document.getElementById("main");
-    let costumeRowDiv = document.createElement("DIV");
-    costumeRowDiv.id = "row";
-   
-    for (let i = 0; i < 8; i++){
-        let costumeImg = document.createElement("IMG");
-        costumeImg.classList.add("costume");
-        costumeImg.src = path + character + "/costumes/costume" + (i+1) + ".png";
-        costumeImg.alt = character + (i+1) + "color.png";
-        console.log(costumeImg.src);    
-        costumeRowDiv.appendChild(costumeImg); 
+    //Loads all 8 costumes of a player and appends it to the givenDiv
+    function loadCostumes(character, givenDiv){
+        let path = "characters/";
+        let mainDiv = document.getElementById("main");
+        let costumeRowDiv = document.createElement("DIV");
+        costumeRowDiv.id = "row";
+       
+        for (let i = 0; i < 8; i++){
+            let costumeImg = document.createElement("IMG");
+            costumeImg.classList.add("costume");
+            costumeImg.src = path + character + "/costumes/costume" + (i+1) + ".png";
+            costumeImg.alt = character + (i+1) + "color.png";
+            console.log(costumeImg.src);    
+            costumeRowDiv.appendChild(costumeImg); 
+        }
+        givenDiv.appendChild(costumeRowDiv);
     }
-    mainDiv.appendChild(costumeRowDiv);
-}
 
-function parseName(name){
-    let newName = name.replace(" ", "_");
-    newName = newName.replace(" ", "_");
-    newName = newName.replace(" ", "_");
-    console.log("\nparseName() got: " + name + "\nreturning: " 
-        + newName + "\n");
-    return newName;
-}
-    
+    //Given a name if the name contains a space character it will replace it
+    //with an underscore character. Ex: "donkey kong" returns "donkey_kong"
+    function parseName(name){
+        let newName = name.replace(" ", "_");
+        newName = newName.replace(" ", "_");
+        newName = newName.replace(" ", "_");
+        console.log("\nparseName() got: " + name + "\nreturning: " 
+            + newName + "\n");
+        return newName;
+    }
+       
+    //Adds move information onto the givenDiv, accesses the information from 
+    //a file/json value
+    function addCharacterMoveInfo(givenDiv){
+        //Adds Moveset
+            addTextTo("Moves: ", "charText", givenDiv);
+            
+            //Specials
+                //Neutral B
+                addTextTo("Neutral B", "moveText", givenDiv);
+                addTextTo("Fireball", "BText", givenDiv);
+                addTextTo("The fireball flings a projectile from Mario's palm that\
+                    bounces a small bit, deals 4-6%", "pageText", givenDiv);
+                    
+                //Side B
+                addTextTo("Side B", "moveText", givenDiv);
+                addTextTo("Cape", "BText", givenDiv);
+                addTextTo("Reflects any projectile back and flips players if hit by\
+                the cape.  Does 5-8%", "pageText", givenDiv);
+                
+                //Down B
+                addTextTo("Down B", "moveText", givenDiv);
+                addTextTo("F.L.U.D.D.", "BText", givenDiv);
+                addTextTo("Charges F.L.U.D.D. and can spray water to push back\
+                players. Does 0%", "pageText", givenDiv);
+                
+                //Up B
+                addTextTo("Up B", "moveText", givenDiv);
+                addTextTo("Coins Jump", "BText", givenDiv);
+                addTextTo("Obtains a few coins with an uppercut to the player.\
+                Does 7-9%", "pageText", givenDiv);
+            
+            //Ground A
+                //Neutral A
+                addTextTo("Neutral A", "moveText", givenDiv);
+                addTextTo("Jab", "AText", givenDiv);
+                addTextTo("Does a 3-hit combo Does 6-8%", "pageText", givenDiv);
+                
+                //Forward Tilt
+                addTextTo("Forward Tilt", "moveText", givenDiv);
+                addTextTo("Leg Sweep", "AText", givenDiv);
+                addTextTo("Uses leg to attack enemies Does 6-8%", "pageText",
+                givenDiv);
+                
+                //Down Tilt
+                addTextTo("Forward Tilt", "moveText", givenDiv);
+                addTextTo("TBN", "AText", givenDiv);
+                addTextTo("TBA", "pageText", givenDiv);
+                
+                //Up Tilt
+                addTextTo("Forward Tilt", "moveText", givenDiv);
+                addTextTo("TBN", "AText", givenDiv);
+                addTextTo("TBA", "pageText", givenDiv);
+            
+            //Aerials
+                //Neutral Air
+                addTextTo("Forward Tilt", "moveText", givenDiv);
+                addTextTo("TBN", "JText", givenDiv);
+                addTextTo("TBA", "pageText", givenDiv);
+                
+                //Forward Air
+                addTextTo("Forward Tilt", "moveText", givenDiv);
+                addTextTo("TBN", "JText", givenDiv);
+                addTextTo("TBA", "pageText", givenDiv);
+                
+                //Back Air
+                addTextTo("Forward Tilt", "moveText", givenDiv);
+                addTextTo("TBN", "JText", givenDiv);
+                addTextTo("TBA", "pageText", givenDiv);
+                
+                //Down Air
+                addTextTo("Forward Tilt", "moveText", givenDiv);
+                addTextTo("TBN", "JText", givenDiv);
+                addTextTo("TBA", "pageText", givenDiv);
+                
+                //Up Air
+                addTextTo("Up Air", "moveText", givenDiv);
+                addTextTo("TBN", "JText", givenDiv);
+                addTextTo("TBA", "pageText", givenDiv);
+            
+            //Smash Attacks
+                //Forward Smash
+                addTextTo("Forward Smash", "moveText");
+                addTextTo("Fire Explosion", "CText");
+                addTextTo("Expells an explosion from Mario's palm. Does 10-13%", 
+                "pageText", givenDiv);
+                
+                //Down Smash
+                addTextTo("Down Smash", "moveText");
+                addTextTo("Mario Sweep", "CText");
+                addTextTo("Attacks by a spin leg sweep Does 11-13%", 
+                "pageText", givenDiv);
+                
+                
+                //Up Smash
+                addTextTo("Up Smash", "moveText");
+                addTextTo("Headbutt", "CText");
+                addTextTo("Hits players with Mario's head. Does 12-15%", 
+                "pageText", givenDiv);
+    }   
 
-    
+        
 })();
