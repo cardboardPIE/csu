@@ -197,8 +197,8 @@ function loadCostumes(character){
     for (let i = 0; i < 8; i++){
         let costumeImg = document.createElement("IMG");
         costumeImg.classList.add("costume");
-        costumeImg.alt = character + i + "color.png";
         costumeImg.src = path + character + "/costumes/costume" + (i+1) + ".png";
+        costumeImg.alt = character + i + "color.png";
         console.log(costumeImg.src);    
         costumeRowDiv.appendChild(costumeImg); 
     }
