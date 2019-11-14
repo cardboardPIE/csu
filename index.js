@@ -193,6 +193,18 @@
     //Loads a characters info page when clicked on from the characters page
     function loadCharacterPage(){
         let name = (this.alt);
+		
+		//If the player chooses random it will obtain a new character at random
+		if (name === "random"){
+			console.log("We got a random one boys!");
+			do {
+				name = characters[characters.length * Math.random() | 0]
+				console.log("name is now: " + name);
+			} 
+			while (name === "random");
+		}
+		
+		
         clearPage();
         let backDiv = document.createElement("DIV");
         backDiv.classList.add("charactersDiv");
@@ -203,7 +215,15 @@
         
         //Adds costumes 
         addTextTo("Costumes:", "charText", backDiv);
-        loadCostumes(parseName(name), backDiv);
+		
+		//If the player chooses a mii fighter character (brawler, swordfighter, or gunner)
+		if (name === "mii brawler" || name === "mii swordfighter" || name === "mii gunner"){
+			loadCostumeForMiis(parseName(name), backDiv);	
+		}
+		else{
+			loadCostumes(parseName(name), backDiv);
+		}
+        
         
         //Get info for character and insert into addCharacterMoveInfo()
         //Use json or .txt file
@@ -226,6 +246,23 @@
             console.log(costumeImg.src);    
             costumeRowDiv.appendChild(costumeImg); 
         }
+        givenDiv.appendChild(costumeRowDiv);
+    }
+	
+	//Loads only the 1 default costume for Miis and appends it to the givenDiv
+    function loadCostumeForMiis(character, givenDiv){
+        let path = "characters/";
+        let mainDiv = document.getElementById("main");
+        let costumeRowDiv = document.createElement("DIV");
+        costumeRowDiv.id = "row";
+       
+		let costumeImg = document.createElement("IMG");
+		costumeImg.classList.add("costume");
+		costumeImg.src = path + character + "/costumes/costume" + (1) + ".png";
+		costumeImg.alt = character + (1) + "color.png";
+		console.log(costumeImg.src);    
+		costumeRowDiv.appendChild(costumeImg); 
+        
         givenDiv.appendChild(costumeRowDiv);
     }
 
@@ -321,21 +358,21 @@
             
             //Smash Attacks
                 //Forward Smash
-                addTextTo("Forward Smash", "moveText");
-                addTextTo("Fire Explosion", "CText");
+                addTextTo("Forward Smash", "moveText", givenDiv);
+                addTextTo("Fire Explosion", "CText", givenDiv);
                 addTextTo("Expells an explosion from Mario's palm. Does 10-13%", 
                 "pageText", givenDiv);
                 
                 //Down Smash
-                addTextTo("Down Smash", "moveText");
-                addTextTo("Mario Sweep", "CText");
+                addTextTo("Down Smash", "moveText", givenDiv);
+                addTextTo("Mario Sweep", "CText", givenDiv);
                 addTextTo("Attacks by a spin leg sweep Does 11-13%", 
                 "pageText", givenDiv);
                 
                 
                 //Up Smash
-                addTextTo("Up Smash", "moveText");
-                addTextTo("Headbutt", "CText");
+                addTextTo("Up Smash", "moveText", givenDiv);
+                addTextTo("Headbutt", "CText", givenDiv);
                 addTextTo("Hits players with Mario's head. Does 12-15%", 
                 "pageText", givenDiv);
     }   
